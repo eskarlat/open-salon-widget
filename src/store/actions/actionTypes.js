@@ -1,0 +1,2 @@
+export const SELECT_LOCATION = 'SELECT_LOCATION';
+export const SELECT_SERVICE = 'SELECT_SERVICE';
