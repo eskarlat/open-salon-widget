@@ -1,14 +1,35 @@
-import React from 'react';
-import './ServiceItem.scss';
+import React, { Component } from "react";
+import "./ServiceItem.scss";
 
-const ServiceItem = props => {
-    return (
-        <div className="service-item" onClick={() => props.clicked(props.service)}>
-            <span>{props.service.title}</span>/
-            <span>{props.service.duration}</span>/
-            <span>{props.service.cost}</span>
-        </div>
-    );
+class ServiceItem extends Component {
+    state = {
+        checkedCheckBox: false
+    };
+
+    onClickHandler = () => {
+        let checked = !this.state.checkedCheckBox;
+
+        this.props.clicked(this.props.service, checked);
+
+        this.setState(prevState => ({
+            checkedCheckBox: checked
+        }));
+    };
+
+    render() {
+        return (
+            <div className="service-item" onClick={this.onClickHandler}>
+                <span>{this.props.service.title}</span>/
+                <span>{this.props.service.duration}</span>/
+                <span>{this.props.service.cost}</span>
+                <input
+                    type="checkbox"
+                    checked={this.state.checkedCheckBox}
+                    onChange={this.onClickHandler}
+                />
+            </div>
+        );
+    }
 }
 
 export default ServiceItem;

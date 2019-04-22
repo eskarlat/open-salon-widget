@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class FilterItems extends Component {
-
     state = {
-        filterString: ''
-    }
+        filterString: ""
+    };
 
     filterHandler = event => {
         this.setState({
@@ -16,8 +15,12 @@ class FilterItems extends Component {
 
     render() {
         return (
-            <input type="search" placeholder="Type to search" onChange={this.filterHandler} />
-        )
+            <input
+                type="search"
+                placeholder="Type to search"
+                onChange={this.filterHandler}
+            />
+        );
     }
 }
 

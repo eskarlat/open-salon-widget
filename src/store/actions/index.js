@@ -1,4 +1,6 @@
 export {
     selectLocation,
-    selectService
-} from './widget';
+    selectService,
+    selectMaster,
+    selectTime
+} from "./widget";
