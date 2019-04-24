@@ -20,7 +20,7 @@ class SelectedItems extends Component {
                 {this.props.selectedServices && (
                     <ul>
                         {this.props.selectedServices.map(service => (
-                            <li key={service.id}>{service.title}</li>
+                            <li key={service._id}>{service.title}</li>
                         ))}
                     </ul>
                 )}
@@ -35,10 +35,10 @@ class SelectedItems extends Component {
 
 const mapStateToProps = state => {
     return {
-        selectedLocation: state.location,
-        selectedServices: state.services,
-        selectedMaster: state.master,
-        selectedTime: state.time
+        selectedLocation: state.widget.location,
+        selectedServices: state.widget.services,
+        selectedMaster: state.widget.master,
+        selectedTime: state.widget.time
     };
 };
 

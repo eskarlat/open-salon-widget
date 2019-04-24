@@ -11,34 +11,15 @@ import * as actions from "../../store/actions/index";
 
 class Masters extends Component {
     state = {
-        masters: [
-            {
-                id: 1,
-                firstName: "Anton",
-                lastName: "Glamozda",
-                title: "barber",
-                instagram: "test"
-            },
-            {
-                id: 2,
-                firstName: "Andrej",
-                lastName: "Kara",
-                title: "barber",
-                instagram: "test"
-            },
-            {
-                id: 3,
-                firstName: "Kiril",
-                lastName: "Kirilov",
-                title: "barber",
-                instagram: "test"
-            }
-        ],
         filteredItems: []
     };
 
+    componentDidMount() {
+        this.props.fetchMasters();
+    }
+
     filterHandler = filterString => {
-        let filteredItems = this.state.masters;
+        let filteredItems = this.props.masters;
         const filter = filterString.toLowerCase();
 
         filteredItems = filteredItems.filter(item => {
@@ -60,7 +41,7 @@ class Masters extends Component {
         if (this.state.filteredItems.length > 0) {
             masters = this.state.filteredItems;
         } else {
-            masters = this.state.masters;
+            masters = this.props.masters;
         }
 
         return (
@@ -69,7 +50,7 @@ class Masters extends Component {
                     <FilterItems onFilter={this.filterHandler} />
                     {masters.map(master => (
                         <MasterItem
-                            key={master.id}
+                            key={master._id}
                             master={master}
                             clicked={this.masterHandler}
                         />
@@ -80,13 +61,20 @@ class Masters extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        masters: state.mas.masters
+    };
+};
+
 const mapDispatchToProps = dispatch => {
     return {
+        fetchMasters: salonId => dispatch(actions.fetchMasters(salonId)),
         selectMaster: master => dispatch(actions.selectMaster(master))
     };
 };
 
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
 )(Masters);

@@ -12,34 +12,15 @@ import * as actions from "../../store/actions/index";
 
 class Location extends Component {
     state = {
-        locations: [
-            {
-                id: 1,
-                address: "Sofia, Tenef 12",
-                open: "10:00",
-                close: "17:00",
-                reservationTimePeriod: "15"
-            },
-            {
-                id: 2,
-                address: "Sofia, Tenef 145",
-                open: "10:00",
-                close: "17:00",
-                reservationTimePeriod: "15"
-            },
-            {
-                id: 3,
-                address: "Plovdiv, FYT 212",
-                open: "10:00",
-                close: "17:00",
-                reservationTimePeriod: "15"
-            }
-        ],
         filteredItems: []
     };
 
+    componentDidMount() {
+        this.props.fetchLocations();
+    }
+
     filterHandler = filterString => {
-        let filteredItems = this.state.locations;
+        let filteredItems = this.props.locations;
         const filter = filterString.toLowerCase();
 
         filteredItems = filteredItems.filter(item => {
@@ -61,7 +42,7 @@ class Location extends Component {
         if (this.state.filteredItems.length > 0) {
             locations = this.state.filteredItems;
         } else {
-            locations = this.state.locations;
+            locations = this.props.locations;
         }
 
         return (
@@ -69,7 +50,7 @@ class Location extends Component {
                 <FilterItems onFilter={this.filterHandler} />
                 {locations.map(location => (
                     <LocationItem
-                        key={location.id}
+                        key={location._id}
                         location={location}
                         clicked={this.locationHandler}
                     />
@@ -79,13 +60,20 @@ class Location extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        locations: state.loc.locations
+    };
+};
+
 const mapDispatchToProps = dispatch => {
     return {
+        fetchLocations: salonId => dispatch(actions.fetchLocations(salonId)),
         selectLocation: location => dispatch(actions.selectLocation(location))
     };
 };
 
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
 )(Location);

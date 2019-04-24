@@ -112,69 +112,30 @@ class SelectTime extends Component {
     };
 
     componentDidMount() {
-        const date = this.state.currentDate.clone().subtract(3, "days");
-        const location = this.props.selectedLocation;
-        const master = this.props.selectedMaster;
-
-        while (date <= this.state.currentDate.clone().add(3, "days")) {
-            const [openHour, openMinutes] = location.open.split(":");
-            const [closeHour, closeMinutes] = location.close.split(":");
-
-            let salonTime = date.clone();
-            salonTime.set("hour", openHour);
-            salonTime.set("minute", openMinutes);
-
-            const salonClose = date.clone();
-            salonClose.set("hour", closeHour);
-            salonClose.set("minute", closeMinutes);
-
-            const timeAvailable = [];
-
-            while (salonTime <= salonClose) {
-                let available = true;
-
-                salon.reservations.map(reservation => {
-                    if (
-                        salonTime.isBetween(
-                            reservation.start,
-                            reservation.end,
-                            null,
-                            "[]"
-                        )
-                    ) {
-                        available = false;
-                    }
-                });
-
-                timeAvailable.push({
-                    time: salonTime.format("HH:mm"),
-                    available: available
-                });
-
-                salonTime.add(location.reservationTimePeriod, "minutes");
-            }
-
-            test.push({
-                date: date.clone(),
-                times: timeAvailable
-            });
-
-            date.add(1, "days");
-        }
-
-        this.setState({ data: test });
+        this.updateCalendar();
     }
 
     minusDayHandler = () => {
         this.setState(prevState => ({
             currentDate: prevState.currentDate.subtract(1, "day")
         }));
+        this.updateCalendar();
     };
 
     plusDayHandler = () => {
         this.setState(prevState => ({
             currentDate: prevState.currentDate.add(1, "day")
         }));
+        this.updateCalendar();
+    };
+
+    updateCalendar = () => {
+        this.props.fetchTimeAvailable({
+            date: this.state.currentDate,
+            salonId: "5cbefd540a9d662b3c917584",
+            locationId: "5cbefd95e312f01948eb81c2",
+            masterId: "5cbefee491f24e2394132997"
+        });
     };
 
     timeSelectHandler = time => {
@@ -187,10 +148,10 @@ class SelectTime extends Component {
                 <div className="select-time__header">
                     <span onClick={this.minusDayHandler}>prev</span>
                     <div>
-                        {this.state.data.map((item, index) => (
+                        {this.props.timeAvailable.map((item, index) => (
                             <span
                                 className={
-                                    item.date.isSame(
+                                    moment(item.date).isSame(
                                         this.state.currentDate,
                                         "day"
                                     )
@@ -199,15 +160,20 @@ class SelectTime extends Component {
                                 }
                                 key={index}
                             >
-                                {item.date.format("DD")}
+                                {moment(item.date).format("DD")}
                             </span>
                         ))}
                     </div>
                     <span onClick={this.plusDayHandler}>Next</span>
                 </div>
                 <div className="select-time__times">
-                    {this.state.data.map(item => {
-                        if (item.date.isSame(this.state.currentDate, "day")) {
+                    {this.props.timeAvailable.map(item => {
+                        if (
+                            moment(item.date).isSame(
+                                this.state.currentDate,
+                                "day"
+                            )
+                        ) {
                             return item.times.map((timeItem, index) => (
                                 <span
                                     onClick={() =>
@@ -232,12 +198,15 @@ class SelectTime extends Component {
 const mapStateToProps = state => {
     return {
         selectedLocation: state.location,
-        selectedMaster: state.master
+        selectedMaster: state.master,
+        timeAvailable: state.timeAvailable.time
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
+        fetchTimeAvailable: props =>
+            dispatch(actions.fetchTimeAvailable(props)),
         selectTime: services => dispatch(actions.selectTime(services))
     };
 };

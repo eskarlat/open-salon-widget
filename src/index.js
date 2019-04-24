@@ -6,11 +6,19 @@ import * as serviceWorker from "./serviceWorker";
 
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import { createStore, applyMiddleware, compose } from "redux";
+import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import thunk from "redux-thunk";
+import axios from "axios";
 
-//Reducer
+//Reducers
 import widgetReducer from "./store/reducers/widget";
+import locationReducer from "./store/reducers/location";
+import serviceReducer from "./store/reducers/service";
+import masterReducer from "./store/reducers/master";
+import timeAvailableReducer from "./store/reducers/timeAvailable";
+
+//Default url for axios
+axios.defaults.baseURL = "http://localhost:3000/api/";
 
 const redux =
     process.env.NODE_ENV === "development"
@@ -19,8 +27,16 @@ const redux =
 
 const composeEnhancers = redux || compose;
 
+const rootReducer = combineReducers({
+    widget: widgetReducer,
+    loc: locationReducer,
+    ser: serviceReducer,
+    mas: masterReducer,
+    timeAvailable: timeAvailableReducer
+});
+
 const store = createStore(
-    widgetReducer,
+    rootReducer,
     composeEnhancers(applyMiddleware(thunk))
 );
 

@@ -11,22 +11,15 @@ import * as actions from "../../store/actions/index";
 
 class Services extends Component {
     state = {
-        services: [
-            { id: 1, title: "men hearcut", duration: 60, cost: 120 },
-            {
-                id: 2,
-                title: "men hearcut with beard",
-                duration: 120,
-                cost: 320
-            },
-            { id: 3, title: "men hearcut with son", duration: 180, cost: 520 },
-            { id: 4, title: "make less beard", duration: 30, cost: 80 }
-        ],
         filteredItems: []
     };
 
+    componentDidMount() {
+        this.props.fetchServices();
+    }
+
     filterHandler = filterString => {
-        let filteredItems = this.state.services;
+        let filteredItems = this.props.services;
         const filter = filterString.toLowerCase();
 
         filteredItems = filteredItems.filter(item => {
@@ -38,7 +31,7 @@ class Services extends Component {
     };
 
     serviceHandler = (service, checked) => {
-        const updatedService = [...this.props.services];
+        const updatedService = [...this.props.checkedServices];
 
         if (checked) {
             updatedService.push(service);
@@ -59,7 +52,7 @@ class Services extends Component {
         if (this.state.filteredItems.length > 0) {
             services = this.state.filteredItems;
         } else {
-            services = this.state.services;
+            services = this.props.services;
         }
 
         return (
@@ -68,7 +61,7 @@ class Services extends Component {
                     <FilterItems onFilter={this.filterHandler} />
                     {services.map(service => (
                         <ServiceItem
-                            key={service.id}
+                            key={service._id}
                             service={service}
                             clicked={this.serviceHandler}
                         />
@@ -82,12 +75,14 @@ class Services extends Component {
 
 const mapStateToProps = state => {
     return {
-        services: state.services
+        services: state.ser.services,
+        checkedServices: state.widget.services
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
+        fetchServices: salonId => dispatch(actions.fetchServices(salonId)),
         selectService: services => dispatch(actions.selectService(services))
     };
 };
