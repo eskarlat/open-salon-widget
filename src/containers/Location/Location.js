@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 //Components
 import List from "../../components/List/List";
-import LocationItem from "./LocationItem/LocationItem";
+import LocationItem from "../../components/LocationItem/LocationItem";
 import FilterItems from "../../components/FilterItems/FilterItems";
 
 //Redux actions
@@ -33,7 +33,7 @@ class Location extends Component {
 
     locationHandler = location => {
         this.props.selectLocation(location);
-        this.props.history.replace("/booking/services");
+        this.props.history.push("/booking/services");
     };
 
     render() {

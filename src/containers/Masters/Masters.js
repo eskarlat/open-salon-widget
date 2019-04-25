@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 //Components
 import List from "../../components/List/List";
-import MasterItem from "../Masters/MasterItem/MasterItem";
+import MasterItem from "../../components/MasterItem/MasterItem";
 import FilterItems from "../../components/FilterItems/FilterItems";
 
 //Redux actions
@@ -32,7 +32,7 @@ class Masters extends Component {
 
     masterHandler = master => {
         this.props.selectMaster(master);
-        this.props.history.replace("/booking/time");
+        this.props.history.push("/booking/time");
     };
 
     render() {

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 //Components
 import List from "../../components/List/List";
-import ServiceItem from "../Services/ServiceItem/ServiceItem";
+import ServiceItem from "../../components/ServiceItem/ServiceItem";
 import FilterItems from "../../components/FilterItems/FilterItems";
 
 //Redux actions
@@ -43,7 +43,7 @@ class Services extends Component {
     };
 
     nextBtnHandler = () => {
-        this.props.history.replace("/booking/masters");
+        this.props.history.push("/booking/masters");
     };
 
     render() {

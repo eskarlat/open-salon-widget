@@ -5,7 +5,10 @@ const initialState = {
     location: null,
     services: [],
     master: null,
-    time: null
+    time: null,
+    clientId: null,
+    loading: false,
+    error: null
 };
 
 const selectLocation = (state, action) => {
@@ -32,6 +35,44 @@ const selectTime = (state, action) => {
     });
 };
 
+export const checkPhoneSuccess = (state, action) => {
+    return updateObject(state, {
+        loading: false
+    });
+};
+
+export const checkPhoneFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false
+    });
+};
+
+export const checkPhoneStart = (state, action) => {
+    return updateObject(state, {
+        loading: true
+    });
+};
+
+export const checkReceivedCodeSuccess = (state, action) => {
+    return updateObject(state, {
+        loading: false
+    });
+};
+
+export const checkReceivedCodeFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false
+    });
+};
+
+export const checkReceivedCodeStart = (state, action) => {
+    return updateObject(state, {
+        loading: true
+    });
+};
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.SELECT_LOCATION:
@@ -42,6 +83,18 @@ const reducer = (state = initialState, action) => {
             return selectMaster(state, action);
         case actionTypes.SELECT_TIME:
             return selectTime(state, action);
+        case actionTypes.CHECK_PHONE_SUCCESS:
+            return checkPhoneSuccess(state, action);
+        case actionTypes.CHECK_PHONE_FAIL:
+            return checkPhoneFail(state, action);
+        case actionTypes.CHECK_PHONE_START:
+            return checkPhoneStart(state, action);
+        case actionTypes.CHECK_RECEIVED_CODE_SUCCESS:
+            return checkReceivedCodeSuccess(state, action);
+        case actionTypes.CHECK_RECEIVED_CODE_START:
+            return checkReceivedCodeStart(state, action);
+        case actionTypes.CHECK_RECEIVED_CODE_FAIL:
+            return checkReceivedCodeFail(state, action);
         default:
             return state;
     }

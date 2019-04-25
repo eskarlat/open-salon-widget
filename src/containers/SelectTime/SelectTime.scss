@@ -20,7 +20,7 @@
         display: flex;
         flex-wrap: wrap;
 
-        span {
+        button {
             padding: 5px;
             margin: 5px;
             background-color: #ccc;
@@ -29,6 +29,7 @@
         .inactive {
             background-color: #eee;
             color: #ccc;
+            cursor: not-allowed;
         }
     }
 }

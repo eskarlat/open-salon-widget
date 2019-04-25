@@ -2,7 +2,9 @@ export {
     selectLocation,
     selectService,
     selectMaster,
-    selectTime
+    selectTime,
+    checkPhone,
+    checkReceivedCode
 } from "./widget";
 
 export { fetchLocations } from "./location";

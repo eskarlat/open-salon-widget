@@ -27,7 +27,9 @@ class SelectedItems extends Component {
                 {this.props.selectedMaster && (
                     <li>{this.props.selectedMaster.firstName}</li>
                 )}
-                {this.props.selectedTime && <li>{this.props.selectedTime}</li>}
+                {this.props.selectedTime && (
+                    <li>{this.props.selectedTime.time}</li>
+                )}
             </ul>
         );
     }

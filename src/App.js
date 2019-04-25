@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 
 //Layouts
 import BasicLayout from "./layouts/Basic/Basic";
@@ -9,32 +10,37 @@ import LocationContainer from "./containers/Location/Location";
 import ServicesContainer from "./containers/Services/Services";
 import MastersContainer from "./containers/Masters/Masters";
 import SelectTimeContainer from "./containers/SelectTime/SelectTime";
+import CheckoutContainer from "./containers/Checkout/Checkout";
 
 class App extends Component {
     render() {
-        return (
-            <BasicLayout>
-                <Switch>
-                    <Route
-                        path="/booking/location"
-                        component={LocationContainer}
-                    />
-                    <Route
-                        path="/booking/services"
-                        component={ServicesContainer}
-                    />
-                    <Route
-                        path="/booking/masters"
-                        component={MastersContainer}
-                    />
-                    <Route
-                        path="/booking/time"
-                        component={SelectTimeContainer}
-                    />
-                </Switch>
-            </BasicLayout>
+        let routers = (
+            <Switch>
+                <Route path="/booking/location" component={LocationContainer} />
+                <Route path="/booking/services" component={ServicesContainer} />
+                <Route path="/booking/masters" component={MastersContainer} />
+                <Route path="/booking/time" component={SelectTimeContainer} />
+                <Route path="/booking/checkout" component={CheckoutContainer} />
+            </Switch>
         );
+
+        console.log(this.props);
+        if (
+            !this.props.selectedLocation &&
+            this.props.location.pathname !== "/booking/location" &&
+            this.props.location.pathname !== "/"
+        ) {
+            routers = <Redirect to="/" />;
+        }
+
+        return <BasicLayout>{routers}</BasicLayout>;
     }
 }
 
-export default App;
+const mapStateToProps = state => {
+    return {
+        selectedLocation: state.widget.location
+    };
+};
+
+export default connect(mapStateToProps)(withRouter(App));
