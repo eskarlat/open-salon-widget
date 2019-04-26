@@ -15,7 +15,10 @@ class Masters extends Component {
     };
 
     componentDidMount() {
-        this.props.fetchMasters();
+        const salonId = "5cbefd540a9d662b3c917584";
+        const locationId = this.props.selectedLocation._id;
+
+        this.props.fetchMasters(salonId, locationId);
     }
 
     filterHandler = filterString => {
@@ -63,13 +66,15 @@ class Masters extends Component {
 
 const mapStateToProps = state => {
     return {
-        masters: state.mas.masters
+        masters: state.mas.masters,
+        selectedLocation: state.widget.location
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchMasters: salonId => dispatch(actions.fetchMasters(salonId)),
+        fetchMasters: (salonId, locationId) =>
+            dispatch(actions.fetchMasters(salonId, locationId)),
         selectMaster: master => dispatch(actions.selectMaster(master))
     };
 };

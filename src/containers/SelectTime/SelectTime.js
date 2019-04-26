@@ -39,8 +39,8 @@ class SelectTime extends Component {
         this.props.fetchTimeAvailable({
             date: this.state.currentDate.format("L"),
             salonId: "5cbefd540a9d662b3c917584",
-            locationId: "5cbefd95e312f01948eb81c2",
-            masterId: "5cbefee491f24e2394132997"
+            locationId: this.props.selectedLocation._id,
+            masterId: this.props.selectedMaster._id
         });
     };
 
@@ -72,8 +72,8 @@ class SelectTime extends Component {
 
 const mapStateToProps = state => {
     return {
-        selectedLocation: state.location,
-        selectedMaster: state.master,
+        selectedLocation: state.widget.location,
+        selectedMaster: state.widget.master,
         timeAvailable: state.timeAvailable.time
     };
 };

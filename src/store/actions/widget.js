@@ -29,6 +29,12 @@ export const selectTime = time => {
     };
 };
 
+export const resetData = () => {
+    return {
+        type: actionType.RESET_DATA
+    };
+};
+
 export const checkPhoneSuccess = data => {
     return {
         type: actionType.CHECK_PHONE_SUCCESS,
@@ -57,16 +63,17 @@ export const checkPhone = phone => {
             const result = await axios.post("auth/check_phone", {
                 phone
             });
-            dispatch(checkPhoneSuccess(result));
+            dispatch(checkPhoneSuccess(result.data));
         } catch (error) {
-            dispatch(checkPhoneFail(error.response.data));
+            dispatch(checkPhoneFail(error.data));
         }
     };
 };
 
-export const checkReceivedCodeSuccess = () => {
+export const checkReceivedCodeSuccess = status => {
     return {
-        type: actionType.CHECK_RECEIVED_CODE_SUCCESS
+        type: actionType.CHECK_RECEIVED_CODE_SUCCESS,
+        status: status
     };
 };
 
@@ -88,13 +95,49 @@ export const checkReceivedCode = (phone, code) => {
         dispatch(checkReceivedCodeStart());
 
         try {
-            await axios.post("auth/check_code", {
+            const result = await axios.post("auth/check_code", {
                 phone,
                 code
             });
-            dispatch(checkReceivedCodeSuccess());
+            dispatch(checkReceivedCodeSuccess(result.data.valid));
         } catch (error) {
             dispatch(checkReceivedCodeFail(error.response.data));
+        }
+    };
+};
+
+export const bookingSuccess = () => {
+    return {
+        type: actionType.BOOKING_SUCCESS,
+        status: true
+    };
+};
+
+export const bookingFail = error => {
+    return {
+        type: actionType.BOOKING_FAIL,
+        error: error
+    };
+};
+
+export const bookingStart = () => {
+    return {
+        type: actionType.BOOKING_START
+    };
+};
+
+export const booking = (booking, user) => {
+    return async dispatch => {
+        dispatch(bookingStart());
+
+        try {
+            await axios.post("reservations/create", {
+                booking,
+                user
+            });
+            dispatch(bookingSuccess());
+        } catch (error) {
+            dispatch(bookingFail(error.response.data));
         }
     };
 };

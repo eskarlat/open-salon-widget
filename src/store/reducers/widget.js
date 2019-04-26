@@ -9,7 +9,9 @@ const initialState = {
     clientId: null,
     loading: false,
     error: null,
-    clientExist: true
+    clientExist: true,
+    receivedCodeValid: false,
+    bookingSuccess: false
 };
 
 const selectLocation = (state, action) => {
@@ -36,6 +38,10 @@ const selectTime = (state, action) => {
     });
 };
 
+const resetData = (state, action) => {
+    return updateObject(state, initialState);
+};
+
 export const checkPhoneSuccess = (state, action) => {
     return updateObject(state, {
         loading: false,
@@ -60,7 +66,8 @@ export const checkPhoneStart = (state, action) => {
 export const checkReceivedCodeSuccess = (state, action) => {
     return updateObject(state, {
         loading: false,
-        error: null
+        error: null,
+        receivedCodeValid: action.status
     });
 };
 
@@ -77,6 +84,27 @@ export const checkReceivedCodeStart = (state, action) => {
     });
 };
 
+export const bookingSuccess = (state, action) => {
+    return updateObject(state, {
+        loading: false,
+        error: null,
+        bookingSuccess: action.status
+    });
+};
+
+export const bookingFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false
+    });
+};
+
+export const bookingStart = (state, action) => {
+    return updateObject(state, {
+        loading: true
+    });
+};
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.SELECT_LOCATION:
@@ -87,6 +115,8 @@ const reducer = (state = initialState, action) => {
             return selectMaster(state, action);
         case actionTypes.SELECT_TIME:
             return selectTime(state, action);
+        case actionTypes.RESET_DATA:
+            return resetData(state, action);
         case actionTypes.CHECK_PHONE_SUCCESS:
             return checkPhoneSuccess(state, action);
         case actionTypes.CHECK_PHONE_FAIL:
@@ -99,6 +129,12 @@ const reducer = (state = initialState, action) => {
             return checkReceivedCodeStart(state, action);
         case actionTypes.CHECK_RECEIVED_CODE_FAIL:
             return checkReceivedCodeFail(state, action);
+        case actionTypes.BOOKING_SUCCESS:
+            return bookingSuccess(state, action);
+        case actionTypes.BOOKING_START:
+            return bookingStart(state, action);
+        case actionTypes.BOOKING_FAIL:
+            return bookingFail(state, action);
         default:
             return state;
     }

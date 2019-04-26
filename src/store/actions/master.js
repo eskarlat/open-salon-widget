@@ -21,12 +21,15 @@ export const fetchMastersStart = () => {
     };
 };
 
-export const fetchMasters = salonId => {
+export const fetchMasters = (salonId, locationId) => {
     return async dispatch => {
         dispatch(fetchMastersStart());
 
         try {
-            const masters = await axios.get("masters");
+            const masters = await axios.post("masters", {
+                salonId,
+                locationId
+            });
             dispatch(fetchMastersSuccess(masters.data));
         } catch (error) {
             dispatch(fetchMastersFail(error));

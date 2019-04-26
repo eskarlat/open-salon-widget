@@ -79,6 +79,46 @@ class Checkout extends Component {
         formIsValid: false
     };
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.receivedCodeValid) {
+            const formData = {};
+
+            for (let formId in this.state.form) {
+                formData[formId] = this.state.form[formId].value;
+            }
+
+            const services = this.props.services.reduce(
+                (servicesId, service) => {
+                    servicesId.push(service._id);
+                    return servicesId;
+                },
+                []
+            );
+
+            const booking = {
+                salonId: "5cbefd540a9d662b3c917584",
+                locationId: this.props.selectedLocation._id,
+                services: services,
+                masterId: this.props.master._id,
+                date: this.props.selectedTime.date,
+                time: this.props.selectedTime.time,
+                comment: formData.comment
+            };
+
+            const user = {
+                phone: formData.phone,
+                name: formData.name,
+                email: formData.email
+            };
+
+            this.props.onBooking(booking, user);
+        }
+
+        if (nextProps.bookingSuccess) {
+            this.props.history.push("/booking/confirmation");
+        }
+    }
+
     inputChangedHandler = (event, inputId) => {
         const { updatedForm, formIsValid } = updateForm({
             form: this.state.form,
@@ -208,9 +248,12 @@ const mapStateToProps = state => {
     return {
         master: state.widget.master,
         services: state.widget.services,
+        selectedLocation: state.widget.location,
         selectedTime: state.widget.time,
         clientExist: state.widget.clientExist,
-        error: state.widget.error
+        error: state.widget.error,
+        receivedCodeValid: state.widget.receivedCodeValid,
+        bookingSuccess: state.widget.bookingSuccess
     };
 };
 
@@ -218,7 +261,8 @@ const mapDispatchToProps = dispatch => {
     return {
         checkPhone: phone => dispatch(actions.checkPhone(phone)),
         checkReceivedCode: (phone, code) =>
-            dispatch(actions.checkReceivedCode(phone, code))
+            dispatch(actions.checkReceivedCode(phone, code)),
+        onBooking: (booking, user) => dispatch(actions.booking(booking, user))
     };
 };
 

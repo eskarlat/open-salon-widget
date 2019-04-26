@@ -11,6 +11,7 @@ import ServicesContainer from "./containers/Services/Services";
 import MastersContainer from "./containers/Masters/Masters";
 import SelectTimeContainer from "./containers/SelectTime/SelectTime";
 import CheckoutContainer from "./containers/Checkout/Checkout";
+import ConfirmationContainer from "./containers/Confirmation/Confirmation";
 
 class App extends Component {
     render() {
@@ -21,14 +22,18 @@ class App extends Component {
                 <Route path="/booking/masters" component={MastersContainer} />
                 <Route path="/booking/time" component={SelectTimeContainer} />
                 <Route path="/booking/checkout" component={CheckoutContainer} />
+                <Route
+                    path="/booking/confirmation"
+                    component={ConfirmationContainer}
+                />
             </Switch>
         );
 
-        console.log(this.props);
         if (
             !this.props.selectedLocation &&
             this.props.location.pathname !== "/booking/location" &&
-            this.props.location.pathname !== "/"
+            this.props.location.pathname !== "/" &&
+            this.props.location.pathname !== "/booking/confirmation"
         ) {
             routers = <Redirect to="/" />;
         }

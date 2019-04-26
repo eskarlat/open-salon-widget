@@ -4,7 +4,9 @@ export {
     selectMaster,
     selectTime,
     checkPhone,
-    checkReceivedCode
+    checkReceivedCode,
+    booking,
+    resetData
 } from "./widget";
 
 export { fetchLocations } from "./location";
