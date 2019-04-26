@@ -1,35 +1,54 @@
-.select-time {
-    padding: 10px;
-    width: 300px;
+.widget__calendar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--color-grey-light-1);
+    box-shadow: var(--shadow-light);
+    padding: 2rem;
 
-    &__header {
-        background-color: orangered;
-        display: flex;
-        justify-content: space-between;
-
-        span {
-            margin-right: 10px;
-        }
-
-        .active {
-            background-color: aquamarine;
+    &--day {
+        font-size: 2rem;
+        font-weight: 600;
+        &-active {
+            background-color: var(--color-grey-dark-2);
+            padding: 1rem 2rem;
+            border-radius: 50%;
+            color: #fff;
         }
     }
 
-    &__times {
-        display: flex;
-        flex-wrap: wrap;
+    &--arrow {
+        font-size: 2rem;
+        cursor: pointer;
+    }
+}
 
-        button {
-            padding: 5px;
-            margin: 5px;
-            background-color: #ccc;
+.widget__times {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+    font-size: 1.5rem;
+    color: var(--color-grey-dark-1);
+    justify-content: center;
+
+    &--item {
+        flex: 0 0 10%;
+        padding: 1rem;
+        box-shadow: var(--shadow-light);
+        background-color: var(--color-grey-light-1);
+        border-radius: 7px;
+        margin-bottom: 1rem;
+        cursor: pointer;
+        margin: .7rem;
+
+        &-no-active {
+            cursor: not-allowed;
+            color: var(--color-grey-light-4);
         }
 
-        .inactive {
-            background-color: #eee;
-            color: #ccc;
-            cursor: not-allowed;
+        &:not(&-no-active):hover {
+            background-image: linear-gradient( to right, var(--color-primary), var(--color-primary-dark)) ;
+            color: #fff;
         }
     }
 }

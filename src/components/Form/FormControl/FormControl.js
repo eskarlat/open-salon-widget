@@ -12,8 +12,11 @@ const FormControl = props => {
     switch (props.elementType) {
         case "input":
             inputElement = (
-                <React.Fragment>
-                    <label htmlFor={props.elementConfig.name}>
+                <div className="widget__form-group">
+                    <label
+                        htmlFor={props.elementConfig.name}
+                        className="widget__form--label"
+                    >
                         {props.label}
                     </label>
                     <input
@@ -21,15 +24,19 @@ const FormControl = props => {
                         {...props.elementConfig}
                         value={props.value}
                         onChange={props.changed}
+                        className="widget__form--input"
                     />
                     {hasError && <p>{props.helperText}</p>}
-                </React.Fragment>
+                </div>
             );
             break;
         case "textarea":
             inputElement = (
-                <React.Fragment>
-                    <label htmlFor={props.elementConfig.name}>
+                <div className="widget__form-group">
+                    <label
+                        htmlFor={props.elementConfig.name}
+                        className="widget__form--label"
+                    >
                         {props.label}
                     </label>
                     <textarea
@@ -37,9 +44,10 @@ const FormControl = props => {
                         {...props.elementConfig}
                         value={props.value}
                         onChange={props.changed}
+                        className="widget__form--input"
                     />
                     {hasError && <p>{props.helperText}</p>}
-                </React.Fragment>
+                </div>
             );
             break;
         default:

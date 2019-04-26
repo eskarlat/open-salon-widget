@@ -1,0 +1,23 @@
+.widget__form {
+    width: 100%;
+
+    &-group {
+        margin-bottom: 2rem;
+    }
+
+    &--label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    &--input {
+        border: 1px solid var(--color-grey-dark-4);
+        border-radius: 1rem;
+        padding: 2rem;
+        width: 100%;
+        max-width: 500px;
+        max-height: 100px;
+        min-height: 50px;
+    }
+}

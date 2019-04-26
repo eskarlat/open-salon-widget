@@ -47,6 +47,7 @@ class Location extends Component {
 
         return (
             <List>
+                <h2 class="widget__heading">Locations</h2>
                 <FilterItems onFilter={this.filterHandler} />
                 {locations.map(location => (
                     <LocationItem

@@ -7,10 +7,22 @@ const SidebarItem = props => {
     const selectedItems = props.item.position === 0 && <SelectedItems />;
 
     return (
-        <li>
-            <NavLink to={props.item.url}>{props.item.title}</NavLink>{" "}
+        <React.Fragment>
+            <div className="widget_navigation__item">
+                <img
+                    className="widget_navigation__icon"
+                    src={props.item.icon}
+                    alt={props.item.title}
+                />
+                <NavLink
+                    className="widget_navigation__text"
+                    to={props.item.url}
+                >
+                    {props.item.title}
+                </NavLink>
+            </div>
             {selectedItems}
-        </li>
+        </React.Fragment>
     );
 };
 

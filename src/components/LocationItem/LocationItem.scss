@@ -1,5 +1,29 @@
 .location-item {
-    padding: 20px;
-    background-color: yellow;
-    margin-bottom: 2px;
+    display: flex;
+    align-items: center;
+
+    &__map {
+        margin-right: 2rem;
+        background-color: var(--color-grey-light-3);
+        padding: 2rem;
+        border-radius: 50%;
+        height: 7rem;
+        width: 7rem;
+    }
+
+    &__icon {
+        width: 3rem;
+        height: 3rem;
+    }
+
+    &__info {
+        
+        &-title {
+            font-weight: 600;
+        }
+
+        &-work-time {
+
+        }
+    }
 }

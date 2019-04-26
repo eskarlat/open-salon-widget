@@ -4,6 +4,7 @@ import _ from "lodash";
 
 //Components
 import Form from "../../components/Form/Form";
+import List from "../../components/List/List";
 
 //Redux actions
 import * as actions from "../../store/actions/index";
@@ -12,6 +13,7 @@ import * as actions from "../../store/actions/index";
 import { updateObject, validation, updateForm } from "../../shared/utility";
 
 import "./Checkout.scss";
+import Instagram from "../../assets/SVG/instagram-with-circle.svg";
 
 class Checkout extends Component {
     state = {
@@ -174,29 +176,60 @@ class Checkout extends Component {
 
     render() {
         return (
-            <div className="checkout">
-                <div className="checkout__master">
-                    <span>{this.props.master.firstName}</span>
-                </div>
-                <div className="checkout__invoice">
-                    <strong>
-                        {this.props.selectedTime.date}/
+            <List>
+                <h2 className="widget__heading">Summary</h2>
+                <div className="widget__summary">
+                    <figure className="widget__summary-master master-item">
+                        <div className="master-item__user-image">
+                            <img
+                                src={this.props.master.avatar}
+                                alt="master 1"
+                                className="master-item__photo"
+                            />
+                            <div className="master-item__user-image-instagram">
+                                <img
+                                    className="master-item__icon"
+                                    src={Instagram}
+                                    alt={this.props.master.firstName}
+                                />
+                            </div>
+                        </div>
+                        <figcaption className="master-item__info">
+                            <div className="master-item__info-name">
+                                {this.props.master.firstName}
+                            </div>
+                            <div className="master-item__info-job">
+                                {this.props.master.description}
+                            </div>
+                        </figcaption>
+                    </figure>
+                    <div class="widget__summary--time">
+                        {this.props.selectedTime.date}, в{" "}
                         {this.props.selectedTime.time}
-                    </strong>
-                    <ul>
+                    </div>
+                    <div className="widget__summary--table">
                         {this.props.services.map(service => (
-                            <li key={service._id}>
-                                {service.title}/{service.cost}
-                            </li>
+                            <div key={service._id} class="widget__summary--row">
+                                <div class="widget__summary-service">
+                                    {service.title}
+                                </div>
+                                <div class="widget__summary-price">
+                                    {service.cost} BGN
+                                </div>
+                            </div>
                         ))}
-                    </ul>
-                    total:
-                    {this.props.services.reduce(
-                        (sum, item) => sum + item.cost,
-                        0
-                    )}
+                        <div class="widget__summary--total">
+                            <span>Total:</span>
+                            <span>
+                                {this.props.services.reduce(
+                                    (sum, item) => sum + item.cost,
+                                    0
+                                )}{" "}
+                                BGN
+                            </span>
+                        </div>
+                    </div>
                 </div>
-                <hr />
                 <div className="contact-data">
                     <Form
                         form={_.pick(this.state.form, ["phone", "comment"])}
@@ -223,9 +256,13 @@ class Checkout extends Component {
                                     placeholder="Your received code"
                                     required
                                     onChange={this.onChangeCodeInput}
+                                    className="widget__form--input"
                                 />
                             </div>
-                            <button onClick={this.onSendCodeAgain}>
+                            <button
+                                onClick={this.onSendCodeAgain}
+                                className="btn btn--link"
+                            >
                                 Send code again
                             </button>
                             {this.props.error && <p>{this.props.error}</p>}
@@ -235,11 +272,12 @@ class Checkout extends Component {
                         type="submit"
                         disabled={this.isValidToBook()}
                         onClick={this.onBookHandler}
+                        className="btn btn--primary"
                     >
                         Book
                     </button>
                 </div>
-            </div>
+            </List>
         );
     }
 }

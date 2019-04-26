@@ -19,6 +19,7 @@ class FilterItems extends Component {
                 type="search"
                 placeholder="Type to search"
                 onChange={this.filterHandler}
+                className="widget__form--input"
             />
         );
     }

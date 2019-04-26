@@ -1,14 +1,20 @@
 import React from "react";
 
 const TimeItem = props => {
+    const noActive = !props.item.available
+        ? "widget__times--item-no-active"
+        : null;
+
+    const itemClass = ["widget__times--item", noActive].join(" ");
+
     return (
-        <button
+        <div
             onClick={() => props.clicked(props.item)}
-            className={!props.item.available ? "inactive" : null}
+            className={itemClass}
             disabled={!props.item.available}
         >
             {props.item.time}
-        </button>
+        </div>
     );
 };
 

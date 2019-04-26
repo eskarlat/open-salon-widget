@@ -7,6 +7,7 @@ import "../SelectTime/SelectTime.scss";
 //Components
 import SelectDay from "../../components/SelectDay/SelectDay";
 import Times from "../../components/Times/Times";
+import List from "../../components/List/List";
 
 //Redux actions
 import * as actions from "../../store/actions/index";
@@ -51,21 +52,24 @@ class SelectTime extends Component {
 
     render() {
         return (
-            <div className="select-time">
-                <SelectDay
-                    class="select-time__header"
-                    nextDay={this.plusDayHandler}
-                    prevDay={this.minusDayHandler}
-                    currentDate={this.state.currentDate}
-                    data={this.props.timeAvailable}
-                />
-                <Times
-                    class="select-time__times"
-                    currentDate={this.state.currentDate}
-                    data={this.props.timeAvailable}
-                    timeClicked={this.timeSelectHandler}
-                />
-            </div>
+            <List>
+                <h2 class="widget__heading">Time available</h2>
+                <div className="select-time">
+                    <SelectDay
+                        class="widget__calendar"
+                        nextDay={this.plusDayHandler}
+                        prevDay={this.minusDayHandler}
+                        currentDate={this.state.currentDate}
+                        data={this.props.timeAvailable}
+                    />
+                    <Times
+                        class="widget__times"
+                        currentDate={this.state.currentDate}
+                        data={this.props.timeAvailable}
+                        timeClicked={this.timeSelectHandler}
+                    />
+                </div>
+            </List>
         );
     }
 }

@@ -58,6 +58,7 @@ class Services extends Component {
         return (
             <React.Fragment>
                 <List>
+                    <h2 class="widget__heading">Services</h2>
                     <FilterItems onFilter={this.filterHandler} />
                     {services.map(service => (
                         <ServiceItem
@@ -66,8 +67,13 @@ class Services extends Component {
                             clicked={this.serviceHandler}
                         />
                     ))}
+                    <button
+                        onClick={this.nextBtnHandler}
+                        className="btn btn--primary"
+                    >
+                        Next
+                    </button>
                 </List>
-                <button onClick={this.nextBtnHandler}>Next</button>
             </React.Fragment>
         );
     }

@@ -5,23 +5,28 @@ const SelectDay = props => {
     const days = props.data.map((item, index) => {
         const itemDate = moment(item.date);
 
+        const active = itemDate.isSame(props.currentDate, "day")
+            ? "widget__calendar--day-active"
+            : null;
+
+        const itemClass = ["widget__calendar--day", active].join(" ");
+
         return (
-            <span
-                className={
-                    itemDate.isSame(props.currentDate, "day") ? "active" : null
-                }
-                key={index}
-            >
+            <div className={itemClass} key={index}>
                 {itemDate.format("DD")}
-            </span>
+            </div>
         );
     });
 
     return (
         <div className={props.class}>
-            <span onClick={props.prevDay}>prev</span>
+            <div class="widget__calendar--arrow" onClick={props.prevDay}>
+                &lang;
+            </div>
             {days}
-            <span onClick={props.nextDay}>Next</span>
+            <div class="widget__calendar--arrow" onClick={props.nextDay}>
+                &rang;
+            </div>
         </div>
     );
 };

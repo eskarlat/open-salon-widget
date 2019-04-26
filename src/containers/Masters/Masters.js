@@ -50,6 +50,7 @@ class Masters extends Component {
         return (
             <React.Fragment>
                 <List>
+                    <h2 class="widget__heading">Masters</h2>
                     <FilterItems onFilter={this.filterHandler} />
                     {masters.map(master => (
                         <MasterItem

@@ -18,15 +18,33 @@ class ServiceItem extends Component {
 
     render() {
         return (
-            <div className="service-item" onClick={this.onClickHandler}>
-                <span>{this.props.service.title}</span>/
-                <span>{this.props.service.duration}</span>/
-                <span>{this.props.service.cost}</span>
-                <input
-                    type="checkbox"
-                    checked={this.state.checkedCheckBox}
-                    onChange={this.onClickHandler}
-                />
+            <div
+                class="widget__item service-item"
+                onClick={this.onClickHandler}
+            >
+                <div class="service-item__info">
+                    <div class="service-item__info-title">
+                        <span>{this.props.service.title}</span>
+                        <span class="service-item__duration">
+                            {this.props.service.duration} min
+                        </span>
+                    </div>
+                    <div class="service-item__info-price">
+                        {this.props.service.cost} BGN
+                    </div>
+                </div>
+                <div class="service-item__checkbox">
+                    <input
+                        type="checkbox"
+                        id="service"
+                        class="service-item__checkbox-input"
+                        checked={this.state.checkedCheckBox}
+                        onChange={this.onClickHandler}
+                    />
+                    <label for="service" class="service-item__checkbox-label">
+                        <span class="service-item__checkbox-button" />
+                    </label>
+                </div>
             </div>
         );
     }

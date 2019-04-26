@@ -2,6 +2,8 @@ import React from "react";
 
 import FormControl from "./FormControl/FormControl";
 
+import "./Form.scss";
+
 const Form = props => {
     const formElementsArray = [];
 
@@ -13,7 +15,7 @@ const Form = props => {
     }
 
     return (
-        <form onSubmit={props.onSubmit}>
+        <form onSubmit={props.onSubmit} className="widget__form">
             {formElementsArray.map(formElement => (
                 <FormControl
                     changed={event => props.onChange(event, formElement.id)}
