@@ -29,9 +29,10 @@ export const selectTime = time => {
     };
 };
 
-export const checkPhoneSuccess = () => {
+export const checkPhoneSuccess = data => {
     return {
-        type: actionType.CHECK_PHONE_SUCCESS
+        type: actionType.CHECK_PHONE_SUCCESS,
+        clientExist: data.clientExist
     };
 };
 
@@ -53,12 +54,12 @@ export const checkPhone = phone => {
         dispatch(checkPhoneStart());
 
         try {
-            await axios.post("auth/check_phone", {
+            const result = await axios.post("auth/check_phone", {
                 phone
             });
-            dispatch(checkPhoneSuccess());
+            dispatch(checkPhoneSuccess(result));
         } catch (error) {
-            dispatch(checkPhoneFail(error));
+            dispatch(checkPhoneFail(error.response.data));
         }
     };
 };
@@ -93,7 +94,7 @@ export const checkReceivedCode = (phone, code) => {
             });
             dispatch(checkReceivedCodeSuccess());
         } catch (error) {
-            dispatch(checkReceivedCodeFail(error));
+            dispatch(checkReceivedCodeFail(error.response.data));
         }
     };
 };

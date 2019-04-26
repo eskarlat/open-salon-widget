@@ -1,58 +1,134 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import _ from "lodash";
+
+//Components
+import Form from "../../components/Form/Form";
 
 //Redux actions
 import * as actions from "../../store/actions/index";
+
+//Util
+import { updateObject, validation, updateForm } from "../../shared/utility";
 
 import "./Checkout.scss";
 
 class Checkout extends Component {
     state = {
-        phone: null,
+        form: {
+            name: {
+                elementType: "input",
+                elementConfig: {
+                    type: "text",
+                    name: "name",
+                    autoFocus: true
+                },
+                label: "Your name",
+                value: "",
+                validation: validation({
+                    required: true,
+                    min: 5
+                }),
+                valid: false,
+                touched: false
+            },
+            email: {
+                elementType: "input",
+                elementConfig: {
+                    type: "email",
+                    name: "email"
+                },
+                label: "Email",
+                value: "",
+                validation: validation({
+                    required: true,
+                    isEmail: true
+                }),
+                valid: false,
+                touched: false
+            },
+            phone: {
+                elementType: "input",
+                elementConfig: {
+                    type: "text",
+                    name: "phone"
+                },
+                label: "Mobile phone",
+                value: "",
+                validation: validation({
+                    required: true
+                }),
+                valid: false,
+                touched: false
+            },
+            comment: {
+                elementType: "textarea",
+                elementConfig: {
+                    type: "text",
+                    name: "comment"
+                },
+                label: "Your comment",
+                value: "",
+                validation: validation({}),
+                valid: true,
+                touched: false
+            }
+        },
         code: null,
-        comment: null,
         codeSent: false,
-        codeChecked: false
+        formIsValid: false
     };
 
-    onChangeMobilePhoneHandler = event => {
-        const updatePhone = event.target.value;
-        this.setState({ phone: updatePhone });
+    inputChangedHandler = (event, inputId) => {
+        const { updatedForm, formIsValid } = updateForm({
+            form: this.state.form,
+            event,
+            inputId
+        });
+
+        this.setState({ form: updatedForm, formIsValid: formIsValid });
     };
 
-    onChangeCommentHandler = event => {
-        const updateComment = event.target.value;
-        this.setState({ comment: updateComment });
+    onChangeCodeInput = event => {
+        const updateSate = updateObject(this.state, {
+            code: event.target.value
+        });
+
+        this.setState(updateSate);
     };
 
-    onChangeCodeHandler = event => {
-        const updateCode = event.target.value;
-        this.setState({ code: updateCode });
-    };
-
-    sendCheckCode() {
-        const phone = this.state.phone;
+    sendCheckCode = () => {
+        const phone = this.state.form.phone.value;
         this.props.checkPhone(phone);
-    }
+    };
 
-    checkReceivedCode() {
-        const phone = this.state.phone;
+    checkReceivedCode = () => {
+        const phone = this.state.form.phone.value;
         const code = this.state.code;
 
         this.props.checkReceivedCode(phone, code);
-    }
+    };
 
     onSendCodeAgain = event => {
         event.preventDefault();
         this.sendCheckCode();
     };
 
-    onBookHandler = () => {
+    onBookHandler = event => {
+        event.preventDefault();
         if (!this.state.codeSent) {
             this.sendCheckCode();
             this.setState({ codeSent: true });
         } else {
             this.checkReceivedCode();
+        }
+    };
+
+    isValidToBook = () => {
+        if (!this.props.clientExist) {
+            return !this.state.formIsValid;
+        } else {
+            return !this.state.form.phone.valid;
         }
     };
 
@@ -82,45 +158,46 @@ class Checkout extends Component {
                 </div>
                 <hr />
                 <div className="contact-data">
-                    <form className="contact-data__form">
-                        <div className="contact-data__form-group">
-                            <label for="client-phone">Mobile phone</label>
-                            <input
-                                type="text"
-                                id="client-phone"
-                                name="phone"
-                                placeholder="+359"
-                                onChange={this.onChangeMobilePhoneHandler}
-                            />
-                        </div>
-                        <div className="contact-data__form-group">
-                            <label for="client-comment">Comment</label>
-                            <textarea
-                                id="client-comment"
-                                name="comment"
-                                placeholder="Enter your comment"
-                                onChange={this.onChangeCommentHandler}
-                            />
-                        </div>
-                        {this.state.codeSent && (
-                            <React.Fragment>
-                                <div className="contact-data__form-group">
-                                    <label for="client-code">Check code</label>
-                                    <input
-                                        type="text"
-                                        id="client-code"
-                                        name="code"
-                                        placeholder="Your received code"
-                                        onChange={this.onChangeCodeHandler}
-                                    />
-                                </div>
-                                <button onClick={this.onSendCodeAgain}>
-                                    Send code again
-                                </button>
-                            </React.Fragment>
-                        )}
-                    </form>
-                    <button onClick={this.onBookHandler}>Book</button>
+                    <Form
+                        form={_.pick(this.state.form, ["phone", "comment"])}
+                        onChange={this.inputChangedHandler}
+                        onSubmit={this.onSubmitHandler}
+                    />
+
+                    {!this.props.clientExist && (
+                        <Form
+                            form={_.pick(this.state.form, ["name", "email"])}
+                            onChange={this.inputChangedHandler}
+                            onSubmit={this.onSubmitHandler}
+                        />
+                    )}
+
+                    {this.state.codeSent && (
+                        <React.Fragment>
+                            <div className="contact-data__form-group">
+                                <label htmlFor="client-code">Check code</label>
+                                <input
+                                    type="text"
+                                    id="client-code"
+                                    name="code"
+                                    placeholder="Your received code"
+                                    required
+                                    onChange={this.onChangeCodeInput}
+                                />
+                            </div>
+                            <button onClick={this.onSendCodeAgain}>
+                                Send code again
+                            </button>
+                            {this.props.error && <p>{this.props.error}</p>}
+                        </React.Fragment>
+                    )}
+                    <button
+                        type="submit"
+                        disabled={this.isValidToBook()}
+                        onClick={this.onBookHandler}
+                    >
+                        Book
+                    </button>
                 </div>
             </div>
         );
@@ -131,7 +208,9 @@ const mapStateToProps = state => {
     return {
         master: state.widget.master,
         services: state.widget.services,
-        selectedTime: state.widget.time
+        selectedTime: state.widget.time,
+        clientExist: state.widget.clientExist,
+        error: state.widget.error
     };
 };
 

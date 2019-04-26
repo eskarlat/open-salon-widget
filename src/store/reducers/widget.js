@@ -8,7 +8,8 @@ const initialState = {
     time: null,
     clientId: null,
     loading: false,
-    error: null
+    error: null,
+    clientExist: true
 };
 
 const selectLocation = (state, action) => {
@@ -37,7 +38,9 @@ const selectTime = (state, action) => {
 
 export const checkPhoneSuccess = (state, action) => {
     return updateObject(state, {
-        loading: false
+        loading: false,
+        clientExist: action.clientExist,
+        error: null
     });
 };
 
@@ -56,7 +59,8 @@ export const checkPhoneStart = (state, action) => {
 
 export const checkReceivedCodeSuccess = (state, action) => {
     return updateObject(state, {
-        loading: false
+        loading: false,
+        error: null
     });
 };
 
