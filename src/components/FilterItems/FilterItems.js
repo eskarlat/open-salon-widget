@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import "./FilterItems.scss";
+
 class FilterItems extends Component {
     state = {
         filterString: ""
@@ -19,7 +21,7 @@ class FilterItems extends Component {
                 type="search"
                 placeholder="Type to search"
                 onChange={this.filterHandler}
-                className="widget__form--input"
+                className="widget__filter"
             />
         );
     }

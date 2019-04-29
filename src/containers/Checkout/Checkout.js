@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import _ from "lodash";
+import moment from "moment";
 
 //Components
 import Form from "../../components/Form/Form";
@@ -23,6 +24,7 @@ class Checkout extends Component {
                 elementConfig: {
                     type: "text",
                     name: "name",
+                    placeholder: "Enter your name",
                     autoFocus: true
                 },
                 label: "Your name",
@@ -38,7 +40,8 @@ class Checkout extends Component {
                 elementType: "input",
                 elementConfig: {
                     type: "email",
-                    name: "email"
+                    name: "email",
+                    placeholder: "example@gmail.com"
                 },
                 label: "Email",
                 value: "",
@@ -53,7 +56,8 @@ class Checkout extends Component {
                 elementType: "input",
                 elementConfig: {
                     type: "text",
-                    name: "phone"
+                    name: "phone",
+                    placeholder: "+359"
                 },
                 label: "Mobile phone",
                 value: "",
@@ -67,7 +71,8 @@ class Checkout extends Component {
                 elementType: "textarea",
                 elementConfig: {
                     type: "text",
-                    name: "comment"
+                    name: "comment",
+                    placeholder: "Enter some extra information"
                 },
                 label: "Your comment",
                 value: "",
@@ -108,9 +113,7 @@ class Checkout extends Component {
             };
 
             const user = {
-                phone: formData.phone,
-                name: formData.name,
-                email: formData.email
+                phone: formData.phone
             };
 
             this.props.onBooking(booking, user);
@@ -145,10 +148,21 @@ class Checkout extends Component {
     };
 
     checkReceivedCode = () => {
-        const phone = this.state.form.phone.value;
+        const formData = {};
+
+        for (let formId in this.state.form) {
+            formData[formId] = this.state.form[formId].value;
+        }
+
+        const user = {
+            phone: formData.phone,
+            name: formData.name,
+            email: formData.email
+        };
+
         const code = this.state.code;
 
-        this.props.checkReceivedCode(phone, code);
+        this.props.checkReceivedCode(user, code);
     };
 
     onSendCodeAgain = event => {
@@ -172,6 +186,10 @@ class Checkout extends Component {
         } else {
             return !this.state.form.phone.valid;
         }
+    };
+
+    selectedDate = () => {
+        return moment(this.props.selectedTime.date).format("LL");
     };
 
     render() {
@@ -204,8 +222,7 @@ class Checkout extends Component {
                         </figcaption>
                     </figure>
                     <div class="widget__summary--time">
-                        {this.props.selectedTime.date}, в{" "}
-                        {this.props.selectedTime.time}
+                        {this.selectedDate()}, в {this.props.selectedTime.time}
                     </div>
                     <div className="widget__summary--table">
                         {this.props.services.map(service => (
@@ -248,7 +265,12 @@ class Checkout extends Component {
                     {this.state.codeSent && (
                         <React.Fragment>
                             <div className="contact-data__form-group">
-                                <label htmlFor="client-code">Check code</label>
+                                <label
+                                    htmlFor="client-code"
+                                    className="widget__form--label"
+                                >
+                                    Check code
+                                </label>
                                 <input
                                     type="text"
                                     id="client-code"
@@ -298,8 +320,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         checkPhone: phone => dispatch(actions.checkPhone(phone)),
-        checkReceivedCode: (phone, code) =>
-            dispatch(actions.checkReceivedCode(phone, code)),
+        checkReceivedCode: (user, code) =>
+            dispatch(actions.checkReceivedCode(user, code)),
         onBooking: (booking, user) => dispatch(actions.booking(booking, user))
     };
 };

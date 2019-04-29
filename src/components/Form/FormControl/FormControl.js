@@ -9,6 +9,10 @@ const FormControl = props => {
         hasError = true;
     }
 
+    const errorClass = hasError ? "widget__form--has-error" : null;
+
+    const itemClass = ["widget__form--input", errorClass].join(" ");
+
     switch (props.elementType) {
         case "input":
             inputElement = (
@@ -24,9 +28,13 @@ const FormControl = props => {
                         {...props.elementConfig}
                         value={props.value}
                         onChange={props.changed}
-                        className="widget__form--input"
+                        className={itemClass}
                     />
-                    {hasError && <p>{props.helperText}</p>}
+                    {hasError && (
+                        <p className="widget__form--input--help-text">
+                            {props.helperText}
+                        </p>
+                    )}
                 </div>
             );
             break;
@@ -44,7 +52,7 @@ const FormControl = props => {
                         {...props.elementConfig}
                         value={props.value}
                         onChange={props.changed}
-                        className="widget__form--input"
+                        className={itemClass}
                     />
                     {hasError && <p>{props.helperText}</p>}
                 </div>

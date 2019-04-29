@@ -16,6 +16,8 @@ import locationReducer from "./store/reducers/location";
 import serviceReducer from "./store/reducers/service";
 import masterReducer from "./store/reducers/master";
 import timeAvailableReducer from "./store/reducers/timeAvailable";
+import reservationsReducer from "./store/reducers/reservation";
+import authReducer from "./store/reducers/auth";
 
 //Default url for axios
 axios.defaults.baseURL = "http://localhost:3000/api/";
@@ -32,7 +34,9 @@ const rootReducer = combineReducers({
     loc: locationReducer,
     ser: serviceReducer,
     mas: masterReducer,
-    timeAvailable: timeAvailableReducer
+    timeAvailable: timeAvailableReducer,
+    res: reservationsReducer,
+    auth: authReducer
 });
 
 const store = createStore(

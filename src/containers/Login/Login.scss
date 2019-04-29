@@ -1,0 +1,10 @@
+.widget-login {
+    padding: 2rem;
+
+    &__wrapper {
+        background-color: var(--color-grey-light-1);
+        box-shadow: var(--shadow-light);
+        border-radius: 7px;
+        padding: 2rem;
+    }
+}

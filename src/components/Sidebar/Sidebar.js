@@ -34,7 +34,7 @@ const Sidebar = props => {
             </nav>
             <div className="legacy">
                 <div className="copyright">
-                    &copy 2019 OpenSalon. Evgeny Skarlat. All right reserved.
+                    &copy; 2019 OpenSalon. Evgeny Skarlat. All right reserved.
                 </div>
             </div>
         </div>

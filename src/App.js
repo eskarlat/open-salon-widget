@@ -15,6 +15,7 @@ import MastersContainer from "./containers/Masters/Masters";
 import SelectTimeContainer from "./containers/SelectTime/SelectTime";
 import CheckoutContainer from "./containers/Checkout/Checkout";
 import ConfirmationContainer from "./containers/Confirmation/Confirmation";
+import ProfileContainer from "./containers/Profile/Profile";
 
 class App extends Component {
     render() {
@@ -29,6 +30,7 @@ class App extends Component {
                     path="/booking/confirmation"
                     component={ConfirmationContainer}
                 />
+                <Route path="/profile" component={ProfileContainer} />
             </Switch>
         );
 
@@ -36,7 +38,8 @@ class App extends Component {
             !this.props.selectedLocation &&
             this.props.location.pathname !== "/booking/location" &&
             this.props.location.pathname !== "/" &&
-            this.props.location.pathname !== "/booking/confirmation"
+            this.props.location.pathname !== "/booking/confirmation" &&
+            this.props.location.pathname !== "/profile"
         ) {
             routers = <Redirect to="/" />;
         }

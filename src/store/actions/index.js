@@ -16,3 +16,7 @@ export { fetchServices } from "./service";
 export { fetchMasters } from "./master";
 
 export { fetchTimeAvailable } from "./timeAvailable";
+
+export { fetchReservations } from "./reservation";
+
+export { logout, authCheckState, authClient, checkAuthTimeout } from "./auth";

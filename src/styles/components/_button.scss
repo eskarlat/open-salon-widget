@@ -1,16 +1,16 @@
 .btn {
-
     border: none;
     background-color: transparent;
     font-size: 1.5rem;
     font-weight: 600;
     cursor: pointer;
+    margin: 1.5rem 0;
 
     &--link {
+        margin-right: 1.5rem;
         &:hover {
             color: var(--color-primary);
         }
-        
     }
 
     &--primary {

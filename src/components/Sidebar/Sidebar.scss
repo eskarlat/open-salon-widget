@@ -18,6 +18,12 @@
         &:hover {
             background-color: var(--color-grey-light-2);
         }
+
+        &:visited, 
+        &:link {
+            color: currentColor;
+            text-decoration: none;
+        }
     }
 
     &__icon {
@@ -48,6 +54,33 @@
 
             &-close {
                 cursor: pointer;
+            }
+        }
+    }
+}
+
+.legacy {
+    display: flex;
+    padding: 2rem;
+    justify-content: space-between;
+
+    font-size: 1.2rem;
+
+    &__copyright {
+        margin-right: 3rem;
+        justify-self: center;
+    }
+
+    &__security-links {
+        display: flex;
+        list-style: none;
+        li {
+            &:not(:last-child) {
+                margin-right: 2rem; 
+            }
+
+            a {
+                text-decoration: none;
             }
         }
     }

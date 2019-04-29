@@ -11,7 +11,10 @@ const initialState = {
     error: null,
     clientExist: true,
     receivedCodeValid: false,
-    bookingSuccess: false
+    bookingSuccess: false,
+    token: null,
+    userId: null,
+    isAuth: false
 };
 
 const selectLocation = (state, action) => {
@@ -67,7 +70,7 @@ export const checkReceivedCodeSuccess = (state, action) => {
     return updateObject(state, {
         loading: false,
         error: null,
-        receivedCodeValid: action.status
+        receivedCodeValid: true
     });
 };
 
@@ -88,7 +91,8 @@ export const bookingSuccess = (state, action) => {
     return updateObject(state, {
         loading: false,
         error: null,
-        bookingSuccess: action.status
+        bookingSuccess: action.status,
+        receivedCodeValid: false
     });
 };
 

@@ -8,19 +8,20 @@ const SidebarItem = props => {
 
     return (
         <React.Fragment>
-            <div className="widget_navigation__item">
+            <NavLink
+                activeClassName="widget_navigation__item-active"
+                className="widget_navigation__item"
+                to={props.item.url}
+            >
                 <img
                     className="widget_navigation__icon"
                     src={props.item.icon}
                     alt={props.item.title}
                 />
-                <NavLink
-                    className="widget_navigation__text"
-                    to={props.item.url}
-                >
+                <span className="widget_navigation__text">
                     {props.item.title}
-                </NavLink>
-            </div>
+                </span>
+            </NavLink>
             {selectedItems}
         </React.Fragment>
     );

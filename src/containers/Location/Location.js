@@ -17,6 +17,7 @@ class Location extends Component {
 
     componentDidMount() {
         this.props.fetchLocations();
+        this.props.resetData();
     }
 
     filterHandler = filterString => {
@@ -47,7 +48,7 @@ class Location extends Component {
 
         return (
             <List>
-                <h2 class="widget__heading">Locations</h2>
+                <h2 className="widget__heading">Locations</h2>
                 <FilterItems onFilter={this.filterHandler} />
                 {locations.map(location => (
                     <LocationItem
@@ -63,14 +64,16 @@ class Location extends Component {
 
 const mapStateToProps = state => {
     return {
-        locations: state.loc.locations
+        locations: state.loc.locations,
+        isLoading: state.widget.isLoading
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         fetchLocations: salonId => dispatch(actions.fetchLocations(salonId)),
-        selectLocation: location => dispatch(actions.selectLocation(location))
+        selectLocation: location => dispatch(actions.selectLocation(location)),
+        resetData: () => dispatch(actions.resetData())
     };
 };
 

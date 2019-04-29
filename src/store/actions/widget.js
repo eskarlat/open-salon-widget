@@ -1,4 +1,6 @@
 import * as actionType from "./actionTypes";
+import { authClient, checkAuthTimeout } from "../actions/index";
+
 import axios from "axios";
 
 export const selectLocation = location => {
@@ -70,10 +72,9 @@ export const checkPhone = phone => {
     };
 };
 
-export const checkReceivedCodeSuccess = status => {
+export const checkReceivedCodeSuccess = () => {
     return {
-        type: actionType.CHECK_RECEIVED_CODE_SUCCESS,
-        status: status
+        type: actionType.CHECK_RECEIVED_CODE_SUCCESS
     };
 };
 
@@ -90,18 +91,31 @@ export const checkReceivedCodeStart = () => {
     };
 };
 
-export const checkReceivedCode = (phone, code) => {
+export const checkReceivedCode = (user, code) => {
     return async dispatch => {
         dispatch(checkReceivedCodeStart());
 
         try {
-            const result = await axios.post("auth/check_code", {
-                phone,
+            const response = await axios.post("auth/check_code", {
+                user,
                 code
             });
-            dispatch(checkReceivedCodeSuccess(result.data.valid));
+
+            const expirationDate = new Date(
+                new Date().getTime() + response.data.expiresIn * 1000
+            );
+
+            localStorage.setItem("token", response.data.token);
+            localStorage.setItem("expirationDate", expirationDate);
+            localStorage.setItem("userId", response.data.userId);
+
+            dispatch(checkReceivedCodeSuccess());
+
+            dispatch(authClient(response.data.token, response.data.userId));
+
+            dispatch(checkAuthTimeout(response.data.expiresIn));
         } catch (error) {
-            dispatch(checkReceivedCodeFail(error.response.data));
+            dispatch(checkReceivedCodeFail(error.data));
         }
     };
 };
@@ -131,13 +145,13 @@ export const booking = (booking, user) => {
         dispatch(bookingStart());
 
         try {
-            await axios.post("reservations/create", {
+            const response = await axios.post("reservations/create", {
                 booking,
                 user
             });
             dispatch(bookingSuccess());
         } catch (error) {
-            dispatch(bookingFail(error.response.data));
+            dispatch(bookingFail(error.data));
         }
     };
 };

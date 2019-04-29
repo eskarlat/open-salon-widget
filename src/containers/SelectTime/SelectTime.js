@@ -23,22 +23,30 @@ class SelectTime extends Component {
     }
 
     minusDayHandler = () => {
-        this.setState(prevState => ({
-            currentDate: prevState.currentDate.subtract(1, "day")
-        }));
-        this.updateCalendar();
+        const updateDate = this.state.currentDate;
+        updateDate.subtract(1, "day");
+
+        this.setState({
+            currentDate: updateDate
+        });
+
+        this.updateCalendar(updateDate);
     };
 
     plusDayHandler = () => {
-        this.setState(prevState => ({
-            currentDate: prevState.currentDate.add(1, "day")
-        }));
-        this.updateCalendar();
+        const updateDate = this.state.currentDate;
+        updateDate.add(1, "day");
+
+        this.setState({
+            currentDate: updateDate
+        });
+
+        this.updateCalendar(updateDate);
     };
 
-    updateCalendar = () => {
+    updateCalendar = (date = this.state.currentDate) => {
         this.props.fetchTimeAvailable({
-            date: this.state.currentDate.format("L"),
+            date: date.format("L"),
             salonId: "5cbefd540a9d662b3c917584",
             locationId: this.props.selectedLocation._id,
             masterId: this.props.selectedMaster._id
