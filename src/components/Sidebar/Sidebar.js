@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import "./Sidebar.scss";
 
 import SidebarItem from "./SidebarItem/SidebarItem";
@@ -22,11 +23,13 @@ const menu = [
 const Sidebar = props => {
     return (
         <div className="widget__sidebar">
-            <img
-                src="http://head-hunters.net/images/logo.svg"
-                alt="logo"
-                className="widget__sidebar-logo"
-            />
+            <div className="widget__sidebar--brand">
+                <img
+                    src={props.salon.logo}
+                    alt="logo"
+                    className="widget__sidebar-logo"
+                />
+            </div>
             <nav className="widget_navigation">
                 {menu.map(item => (
                     <SidebarItem key={item.id} item={item} />
@@ -41,4 +44,10 @@ const Sidebar = props => {
     );
 };
 
-export default Sidebar;
+const mapStateToProps = state => {
+    return {
+        salon: state.sal.salon
+    };
+};
+
+export default connect(mapStateToProps)(Sidebar);

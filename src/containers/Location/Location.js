@@ -16,7 +16,7 @@ class Location extends Component {
     };
 
     componentDidMount() {
-        this.props.fetchLocations();
+        this.props.fetchLocations(this.props.salon._id);
         this.props.resetData();
     }
 
@@ -65,7 +65,8 @@ class Location extends Component {
 const mapStateToProps = state => {
     return {
         locations: state.loc.locations,
-        isLoading: state.widget.isLoading
+        isLoading: state.widget.isLoading,
+        salon: state.sal.salon
     };
 };
 

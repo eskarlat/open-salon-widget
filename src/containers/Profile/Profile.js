@@ -20,18 +20,12 @@ class Profile extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.isAuth && !this.props.isAuth) {
-            this.props.fetchReservations(
-                "5cbefd540a9d662b3c917584",
-                nextProps.token
-            );
+            this.props.fetchReservations(nextProps.salon._id, nextProps.token);
         }
     }
 
     componentDidMount() {
-        this.props.fetchReservations(
-            "5cbefd540a9d662b3c917584",
-            this.props.token
-        );
+        this.props.fetchReservations(this.props.salon._id, this.props.token);
     }
 
     openDetails = (event, reservation) => {
@@ -120,7 +114,8 @@ const mapStateToProps = state => {
         token: state.auth.token,
         reservations: state.res.reservations,
         client: state.res.client,
-        isLoading: state.res.loading
+        isLoading: state.res.loading,
+        salon: state.sal.salon
     };
 };
 

@@ -19,4 +19,6 @@ export { fetchTimeAvailable } from "./timeAvailable";
 
 export { fetchReservations } from "./reservation";
 
+export { getSalonInfo } from "./salon";
+
 export { logout, authCheckState, authClient, checkAuthTimeout } from "./auth";

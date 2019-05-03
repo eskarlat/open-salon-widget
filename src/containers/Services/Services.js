@@ -15,7 +15,7 @@ class Services extends Component {
     };
 
     componentDidMount() {
-        this.props.fetchServices();
+        this.props.fetchServices(this.props.salon._id);
     }
 
     filterHandler = filterString => {
@@ -82,7 +82,8 @@ class Services extends Component {
 const mapStateToProps = state => {
     return {
         services: state.ser.services,
-        checkedServices: state.widget.services
+        checkedServices: state.widget.services,
+        salon: state.sal.salon
     };
 };
 

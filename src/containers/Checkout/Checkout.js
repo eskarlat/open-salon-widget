@@ -103,7 +103,7 @@ class Checkout extends Component {
             );
 
             const booking = {
-                salonId: "5cbefd540a9d662b3c917584",
+                salonId: this.props.salon._id,
                 locationId: this.props.selectedLocation._id,
                 services: services,
                 masterId: this.props.master._id,
@@ -313,7 +313,8 @@ const mapStateToProps = state => {
         clientExist: state.widget.clientExist,
         error: state.widget.error,
         receivedCodeValid: state.widget.receivedCodeValid,
-        bookingSuccess: state.widget.bookingSuccess
+        bookingSuccess: state.widget.bookingSuccess,
+        salon: state.sal.salon
     };
 };
 

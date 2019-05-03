@@ -26,7 +26,11 @@ export const fetchServices = salonId => {
         dispatch(fetchServicesStart());
 
         try {
-            const services = await axios.get("services");
+            const services = await axios.get("services", {
+                params: {
+                    salonId
+                }
+            });
             dispatch(fetchServicesSuccess(services.data));
         } catch (error) {
             dispatch(fetchServicesFail(error));

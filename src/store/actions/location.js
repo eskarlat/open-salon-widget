@@ -26,7 +26,11 @@ export const fetchLocations = salonId => {
         dispatch(fetchLocationsStart());
 
         try {
-            const locations = await axios.get("locations");
+            const locations = await axios.get("locations", {
+                params: {
+                    salonId
+                }
+            });
             dispatch(fetchLocationsSuccess(locations.data));
         } catch (error) {
             dispatch(fetchLocationsFail(error));

@@ -47,7 +47,7 @@ class SelectTime extends Component {
     updateCalendar = (date = this.state.currentDate) => {
         this.props.fetchTimeAvailable({
             date: date.format("L"),
-            salonId: "5cbefd540a9d662b3c917584",
+            salonId: this.props.salon._id,
             locationId: this.props.selectedLocation._id,
             masterId: this.props.selectedMaster._id
         });
@@ -86,7 +86,8 @@ const mapStateToProps = state => {
     return {
         selectedLocation: state.widget.location,
         selectedMaster: state.widget.master,
-        timeAvailable: state.timeAvailable.time
+        timeAvailable: state.timeAvailable.time,
+        salon: state.sal.salon
     };
 };
 

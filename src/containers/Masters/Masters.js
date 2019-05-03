@@ -15,7 +15,7 @@ class Masters extends Component {
     };
 
     componentDidMount() {
-        const salonId = "5cbefd540a9d662b3c917584";
+        const salonId = this.props.salon._id;
         const locationId = this.props.selectedLocation._id;
 
         this.props.fetchMasters(salonId, locationId);
@@ -68,7 +68,8 @@ class Masters extends Component {
 const mapStateToProps = state => {
     return {
         masters: state.mas.masters,
-        selectedLocation: state.widget.location
+        selectedLocation: state.widget.location,
+        salon: state.sal.salon
     };
 };
 

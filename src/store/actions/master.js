@@ -26,9 +26,11 @@ export const fetchMasters = (salonId, locationId) => {
         dispatch(fetchMastersStart());
 
         try {
-            const masters = await axios.post("masters", {
-                salonId,
-                locationId
+            const masters = await axios.get("masters", {
+                params: {
+                    salonId,
+                    locationId
+                }
             });
             dispatch(fetchMastersSuccess(masters.data));
         } catch (error) {
