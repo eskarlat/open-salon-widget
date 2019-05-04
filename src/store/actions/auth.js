@@ -1,9 +1,9 @@
 import * as actionType from "./actionTypes";
 
 export const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("expirationDate");
-    localStorage.removeItem("userId");
+    localStorage.removeItem("os-widget-token");
+    localStorage.removeItem("os-widget-expirationDate");
+    localStorage.removeItem("os-widget-userId");
 
     return {
         type: actionType.AUTH_LOGOUT
@@ -28,17 +28,17 @@ export const checkAuthTimeout = expirationTime => {
 
 export const authCheckState = () => {
     return dispatch => {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem("os-widget-token");
         if (!token) {
             dispatch(logout());
         } else {
             const expirationDate = new Date(
-                localStorage.getItem("expirationDate")
+                localStorage.getItem("os-widget-expirationDate")
             );
             if (expirationDate <= new Date()) {
                 dispatch(logout());
             } else {
-                const userId = localStorage.getItem("userId");
+                const userId = localStorage.getItem("os-widget-userId");
                 dispatch(authClient(token, userId));
                 const expiresIn =
                     (expirationDate.getTime() - new Date().getTime()) / 1000;

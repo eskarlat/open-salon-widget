@@ -26,7 +26,7 @@ export const fetchMasters = (salonId, locationId) => {
         dispatch(fetchMastersStart());
 
         try {
-            const masters = await axios.get("masters", {
+            const masters = await axios.get("widget/masters", {
                 params: {
                     salonId,
                     locationId

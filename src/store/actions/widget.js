@@ -105,9 +105,9 @@ export const checkReceivedCode = (user, code) => {
                 new Date().getTime() + response.data.expiresIn * 1000
             );
 
-            localStorage.setItem("token", response.data.token);
-            localStorage.setItem("expirationDate", expirationDate);
-            localStorage.setItem("userId", response.data.userId);
+            localStorage.setItem("os-widget-token", response.data.token);
+            localStorage.setItem("os-widget-expirationDate", expirationDate);
+            localStorage.setItem("os-widget-userId", response.data.userId);
 
             dispatch(checkReceivedCodeSuccess());
 

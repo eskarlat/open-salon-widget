@@ -26,7 +26,7 @@ export const fetchServices = salonId => {
         dispatch(fetchServicesStart());
 
         try {
-            const services = await axios.get("services", {
+            const services = await axios.get("widget/services", {
                 params: {
                     salonId
                 }
