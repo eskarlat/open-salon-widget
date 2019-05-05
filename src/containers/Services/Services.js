@@ -70,6 +70,7 @@ class Services extends Component {
                     <button
                         onClick={this.nextBtnHandler}
                         className="btn btn--primary"
+                        disabled={!this.props.checkedServices.length}
                     >
                         Next
                     </button>

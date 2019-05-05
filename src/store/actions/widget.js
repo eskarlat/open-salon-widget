@@ -140,12 +140,13 @@ export const bookingStart = () => {
     };
 };
 
-export const booking = (booking, user) => {
+export const booking = (token, booking, user) => {
     return async dispatch => {
         dispatch(bookingStart());
 
         try {
             const response = await axios.post("reservations/create", {
+                token,
                 booking,
                 user
             });

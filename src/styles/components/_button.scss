@@ -34,4 +34,9 @@
             background-color: darken(#0CB34F, 3%);
         }
     }
+
+    &:disabled {
+        background-color: var(--color-grey-light-4);
+        color: var(--color-grey-light-3);
+    }
 }

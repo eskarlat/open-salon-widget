@@ -43,6 +43,10 @@ class Confirmation extends Component {
     };
 
     render() {
+        const style = {
+            "background-image": `url(${this.state.selectedMaster.avatar})`
+        };
+
         return (
             <React.Fragment>
                 <List>
@@ -55,9 +59,8 @@ class Confirmation extends Component {
                                 Success booking
                             </h1>
                             <figure className="widget__confirmation--master">
-                                <img
-                                    src={this.state.selectedMaster.avatar}
-                                    alt={this.state.selectedMaster.firstName}
+                                <div
+                                    style={style}
                                     className="widget__confirmation--master--photo"
                                 />
                                 <figcaption className="widget__confirmation--master--info">

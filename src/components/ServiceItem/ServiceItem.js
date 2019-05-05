@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import "./ServiceItem.scss";
 
 class ServiceItem extends Component {
@@ -30,7 +31,7 @@ class ServiceItem extends Component {
                         </span>
                     </div>
                     <div class="service-item__info-price">
-                        {this.props.service.cost} BGN
+                        {this.props.service.cost} {this.props.salonCurrency}
                     </div>
                 </div>
                 <div class="service-item__checkbox">
@@ -50,4 +51,10 @@ class ServiceItem extends Component {
     }
 }
 
-export default ServiceItem;
+const mapStateToProps = state => {
+    return {
+        salonCurrency: state.sal.salon.currency
+    };
+};
+
+export default connect(mapStateToProps)(ServiceItem);

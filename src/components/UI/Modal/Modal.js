@@ -1,5 +1,6 @@
 import React from "react";
 import moment from "moment";
+import { connect } from "react-redux";
 
 import Backdrop from "./Backdrop/Backdrop";
 
@@ -43,7 +44,7 @@ const Modal = props => {
                                         {service.title}
                                     </div>
                                     <div className="widget__summary-price">
-                                        {service.cost} BGN
+                                        {service.cost} {props.salonCurrency}
                                     </div>
                                 </div>
                             ))}
@@ -54,7 +55,7 @@ const Modal = props => {
                                         (sum, item) => sum + item.cost,
                                         0
                                     )}{" "}
-                                    BGN
+                                    {props.salonCurrency}
                                 </span>
                             </div>
                             <p>Your comment: {props.reservation.comment}</p>
@@ -66,4 +67,10 @@ const Modal = props => {
     );
 };
 
-export default Modal;
+const mapStateToProps = state => {
+    return {
+        salonCurrency: state.sal.salon.currency
+    };
+};
+
+export default connect(mapStateToProps)(Modal);

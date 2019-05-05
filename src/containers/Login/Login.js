@@ -128,7 +128,7 @@ class Login extends Component {
     render() {
         return (
             <div className="widget-login">
-                <h2 className="widget__heading">Авторизация</h2>
+                <h2 className="widget__heading">Login</h2>
                 <div className="widget-login__wrapper">
                     <Form
                         form={_.pick(this.state.form, ["phone"])}

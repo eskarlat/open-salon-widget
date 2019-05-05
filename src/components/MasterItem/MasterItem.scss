@@ -7,14 +7,16 @@
         border-radius: 50%;
         margin-right: 2rem;
         backface-visibility: hidden;
+        background-size: cover;
+        background-position: top;
     }
 
     &__user-image {
         position: relative;
         &-instagram {
             position: absolute;
-            bottom: 3px;
-            right: 14px;
+            bottom: -1px;
+            right: 5px;
             background-color: #fff;
             border-radius: 50%;
             display: flex;

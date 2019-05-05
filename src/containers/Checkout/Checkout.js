@@ -83,11 +83,16 @@ class Checkout extends Component {
         },
         code: null,
         codeSent: false,
-        formIsValid: false
+        formIsValid: false,
+        isBooked: false
     };
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.receivedCodeValid) {
+        if (
+            nextProps.isAuth &&
+            nextProps.receivedCodeValid &&
+            !this.state.isBooked
+        ) {
             const formData = {};
 
             for (let formId in this.state.form) {
@@ -112,11 +117,15 @@ class Checkout extends Component {
                 comment: formData.comment
             };
 
+            const token = nextProps.token;
+
             const user = {
                 phone: formData.phone
             };
 
-            this.props.onBooking(booking, user);
+            this.props.onBooking(token, booking, user);
+
+            this.setState({ isBooked: true });
         }
 
         if (nextProps.bookingSuccess) {
@@ -193,17 +202,17 @@ class Checkout extends Component {
     };
 
     render() {
+        const style = {
+            "background-image": `url(${this.props.master.avatar})`
+        };
+
         return (
             <List>
                 <h2 className="widget__heading">Summary</h2>
                 <div className="widget__summary">
                     <figure className="widget__summary-master master-item">
                         <div className="master-item__user-image">
-                            <img
-                                src={this.props.master.avatar}
-                                alt="master 1"
-                                className="master-item__photo"
-                            />
+                            <div style={style} className="master-item__photo" />
                             <div className="master-item__user-image-instagram">
                                 <img
                                     className="master-item__icon"
@@ -231,7 +240,7 @@ class Checkout extends Component {
                                     {service.title}
                                 </div>
                                 <div class="widget__summary-price">
-                                    {service.cost} BGN
+                                    {service.cost} {this.props.salonCurrency}
                                 </div>
                             </div>
                         ))}
@@ -242,7 +251,7 @@ class Checkout extends Component {
                                     (sum, item) => sum + item.cost,
                                     0
                                 )}{" "}
-                                BGN
+                                {this.props.salonCurrency}
                             </span>
                         </div>
                     </div>
@@ -312,9 +321,12 @@ const mapStateToProps = state => {
         selectedTime: state.widget.time,
         clientExist: state.widget.clientExist,
         error: state.widget.error,
-        receivedCodeValid: state.widget.receivedCodeValid,
         bookingSuccess: state.widget.bookingSuccess,
-        salon: state.sal.salon
+        receivedCodeValid: state.widget.receivedCodeValid,
+        salon: state.sal.salon,
+        isAuth: state.auth.isAuth,
+        token: state.auth.token,
+        salonCurrency: state.sal.salon.currency
     };
 };
 
@@ -323,7 +335,8 @@ const mapDispatchToProps = dispatch => {
         checkPhone: phone => dispatch(actions.checkPhone(phone)),
         checkReceivedCode: (user, code) =>
             dispatch(actions.checkReceivedCode(user, code)),
-        onBooking: (booking, user) => dispatch(actions.booking(booking, user))
+        onBooking: (token, booking, user) =>
+            dispatch(actions.booking(token, booking, user))
     };
 };
 
