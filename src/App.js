@@ -21,16 +21,37 @@ class App extends Component {
     render() {
         let routers = (
             <Switch>
-                <Route path="/booking/location" component={LocationContainer} />
-                <Route path="/booking/services" component={ServicesContainer} />
-                <Route path="/booking/masters" component={MastersContainer} />
-                <Route path="/booking/time" component={SelectTimeContainer} />
-                <Route path="/booking/checkout" component={CheckoutContainer} />
+                <Route path="/" exact component={LocationContainer} />
+                <Route
+                    path="/booking/location"
+                    exact
+                    component={LocationContainer}
+                />
+                <Route
+                    path="/booking/services"
+                    exact
+                    component={ServicesContainer}
+                />
+                <Route
+                    path="/booking/masters"
+                    exact
+                    component={MastersContainer}
+                />
+                <Route
+                    path="/booking/time"
+                    exact
+                    component={SelectTimeContainer}
+                />
+                <Route
+                    path="/booking/checkout"
+                    exact
+                    component={CheckoutContainer}
+                />
                 <Route
                     path="/booking/confirmation"
                     component={ConfirmationContainer}
                 />
-                <Route path="/profile" component={ProfileContainer} />
+                <Route path="/profile" exact component={ProfileContainer} />
             </Switch>
         );
 
