@@ -1,16 +1,32 @@
+@import "../../styles/abstracts/mixins";
+
 .widget-app {
     background-color: rgba(0,0,0, .8);
     width: 100vw;
     height: 100vh;
+
+    @include respond(phone) { // width < 600?
+        height: auto;
+    }
 }
 
 .widget {
     background-color: var(--color-grey-light-1);
-    height: 100vh;
+    min-height: 100vh;
     width: 50%;
+    height: 100vh;
     box-shadow: var(--shadow-dark);
     display: flex;
     position: relative;
+
+    @include respond(phone) { // width < 600?
+        flex-direction: column;
+        height: 100%;
+    }
+
+    @include respond(tab-land) { // width < 600?
+        width: 90%;
+    }
 
     &__sidebar {
         
@@ -29,6 +45,7 @@
             justify-content: center;
             align-items: center;
             padding: 1rem;
+
         }
 
         &-logo {
@@ -38,11 +55,11 @@
     }
 
     &__content {
-        width: 100%;
-        height: 100%;
+        flex: 1;
         position: relative;
         background-color: var(--color-grey-light-3);
         z-index: 10;
+        height: 100%;
     }
 
     &__heading {

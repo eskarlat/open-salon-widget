@@ -21,7 +21,7 @@ import authReducer from "./store/reducers/auth";
 import salonReducer from "./store/reducers/salon";
 
 //Default url for axios
-axios.defaults.baseURL = "http://localhost:3000/api/";
+axios.defaults.baseURL = "https://open-salon.herokuapp.com/api/";
 
 const redux =
     process.env.NODE_ENV === "development"

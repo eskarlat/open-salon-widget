@@ -1,3 +1,5 @@
+@import "../../../styles/abstracts/mixins";
+
 .widget__modal {
     width: 60rem;
     background-color: #fff;
@@ -6,6 +8,10 @@
     overflow: hidden;
     // transform: translate(-50%, -50%);
     z-index: 9999;
+
+    @include respond(phone) {
+        width: 100%;
+    }
 
     &--header {
         padding: 2rem;

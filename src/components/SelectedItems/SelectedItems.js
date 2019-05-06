@@ -26,7 +26,7 @@ class SelectedItems extends Component {
                         </li>
 
                         {this.props.selectedServices && (
-                            <ul className="widget_navigation__list">
+                            <ul className="widget_navigation__sub-list">
                                 {this.props.selectedServices.map(service => (
                                     <li
                                         key={service._id}
