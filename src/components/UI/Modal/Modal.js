@@ -12,8 +12,10 @@ const Modal = props => {
             <div className="widget__modal">
                 <div className="widget__modal--header">
                     <h4 className="widget__modal--header--text">
-                        {moment(props.reservation.start).format("LLL")} -{" "}
-                        {moment(props.reservation.end).format("LT")}
+                        {moment(props.reservation.start).format(
+                            "DD MMM, YYYY H:mm"
+                        )}{" "}
+                        - {moment(props.reservation.end).format("H:mm")}
                     </h4>
                     <span
                         className="widget__modal--header--close"
